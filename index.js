@@ -34,10 +34,9 @@ if (missingEnvVars.length > 0) {
 // CORS configuration
 const allowedOrigins = [
   'http://localhost:5173',    // Local development
-  'https://newzai.vercel.app', // Production frontend
-  'https://newzai-382g.vercel.app', // Production backend
-  'https://newsai-lac-ten.vercel.app', // New production frontend
+
   'https://newzai-backend.vercel.app', // New production backend
+  'https://newz-chi.vercel.app', // Current production frontend
   'http://localhost:3000',    // Alternative local
   'http://localhost:5000'     // Alternative local
 ];
@@ -75,6 +74,14 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  
+  // Set proper MIME types for JavaScript modules
+  if (req.url.endsWith('.js')) {
+    res.type('application/javascript');
+  }
+  if (req.url.endsWith('.mjs')) {
+    res.type('application/javascript');
+  }
   
   // Handle preflight requests
   if (req.method === 'OPTIONS') {
